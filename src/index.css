@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/* Tailwind's `dark:` variant follows <html data-theme="dark"> (set by index.html + ThemeToggle) */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ================= design tokens ================= */
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+
+  --color-accent: #6d66ff;
+  --color-accent-lit: #a9acff;
+  --color-ground-deep: #11132a;
+
+  --breakpoint-nav: 940px;
+}
+
+/* ================= theme values: light (default) and dark =================
+   neumorphism: surfaces share the page colour, depth comes from twin shadows */
+:root {
+  color-scheme: light;
+
+  --neu-bg: #efedff;
+  --neu-accent: var(--color-accent);
+  --neu-line: rgba(27, 24, 72, 0.1);
+
+  --fg: #1b1848;
+  --fg-soft: #5a5885;
+  --fg-faint: #8a88b4;
+
+  --neu-raised: 10px 10px 24px rgba(124, 118, 210, 0.3), -10px -10px 24px rgba(255, 255, 255, 0.95);
+  --neu-raised-sm: 5px 5px 11px rgba(124, 118, 210, 0.3), -5px -5px 11px rgba(255, 255, 255, 0.95);
+  --neu-raised-lg: 12px 12px 28px rgba(124, 118, 210, 0.3), -12px -12px 28px rgba(255, 255, 255, 0.95);
+  --neu-inset: inset 8px 8px 16px rgba(124, 118, 210, 0.26), inset -8px -8px 16px rgba(255, 255, 255, 0.95);
+  --neu-inset-sm: inset 6px 6px 13px rgba(124, 118, 210, 0.26), inset -6px -6px 13px rgba(255, 255, 255, 0.95);
+  --neu-btn: 8px 8px 18px rgba(124, 118, 210, 0.42), -6px -6px 14px rgba(255, 255, 255, 0.9);
+  --neu-btn-press: inset 4px 4px 10px rgba(30, 24, 150, 0.55);
+  --neu-glow: 0 6px 14px rgba(91, 84, 240, 0.45);
+  --neu-groove: inset 2px 2px 4px rgba(124, 118, 210, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.9);
+  --neu-image: 0 30px 70px -25px rgba(124, 118, 210, 0.5), -10px -10px 30px rgba(255, 255, 255, 0.9);
+
+  --about-bg: linear-gradient(180deg, #efedff 0%, #f4f2ff 50%, #efedff 100%);
+  --services-bg: linear-gradient(180deg, #efedff 0%, #f4f2ff 30%, #f0eeff 70%, #efedff 100%);
+  --grid-line: rgba(27, 24, 72, 0.06);
+  --grid-opacity: 0.06;
+  --glass-bg: rgba(239, 237, 255, 0.72);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --neu-bg: #100e2a;
+  --neu-accent: var(--color-accent-lit);
+  --neu-line: rgba(255, 255, 255, 0.06);
+
+  --fg: rgba(255, 255, 255, 0.92);
+  --fg-soft: rgba(255, 255, 255, 0.55);
+  --fg-faint: rgba(255, 255, 255, 0.32);
+
+  --neu-raised: 10px 10px 24px rgba(4, 3, 18, 0.75), -8px -8px 20px rgba(124, 118, 255, 0.07);
+  --neu-raised-sm: 5px 5px 12px rgba(4, 3, 18, 0.75), -4px -4px 10px rgba(124, 118, 255, 0.08);
+  --neu-raised-lg: 12px 12px 28px rgba(4, 3, 18, 0.75), -9px -9px 22px rgba(124, 118, 255, 0.07);
+  --neu-inset: inset 7px 7px 16px rgba(4, 3, 18, 0.8), inset -6px -6px 14px rgba(124, 118, 255, 0.07);
+  --neu-inset-sm: inset 6px 6px 13px rgba(4, 3, 18, 0.8), inset -5px -5px 12px rgba(124, 118, 255, 0.07);
+  --neu-btn: 8px 8px 18px rgba(4, 3, 18, 0.7), -5px -5px 14px rgba(124, 118, 255, 0.12);
+  --neu-btn-press: inset 4px 4px 10px rgba(20, 14, 120, 0.6);
+  --neu-glow: 0 6px 18px rgba(109, 102, 255, 0.45);
+  --neu-groove: inset 2px 2px 4px rgba(4, 3, 18, 0.8), inset -2px -2px 4px rgba(124, 118, 255, 0.08);
+  --neu-image: 0 40px 90px -30px rgba(0, 0, 0, 0.6), 0 0 60px -10px rgba(109, 102, 255, 0.1);
+
+  --about-bg: linear-gradient(180deg, #0a0820 0%, #100e2a 50%, #0a0820 100%);
+  --services-bg: linear-gradient(180deg, #0a0820 0%, #110e2e 30%, #0d0b24 70%, #0a0820 100%);
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --grid-opacity: 0.03;
+  --glass-bg: rgba(10, 8, 32, 0.6);
+}
+
+/* utilities: bg-neu, text-fg, border-neu-line, shadow-neu-raised, ... */
+@theme inline {
+  --color-neu: var(--neu-bg);
+  --color-neu-accent: var(--neu-accent);
+  --color-neu-line: var(--neu-line);
+  --color-fg: var(--fg);
+  --color-fg-soft: var(--fg-soft);
+  --color-fg-faint: var(--fg-faint);
+
+  --shadow-neu-raised: var(--neu-raised);
+  --shadow-neu-raised-sm: var(--neu-raised-sm);
+  --shadow-neu-raised-lg: var(--neu-raised-lg);
+  --shadow-neu-inset: var(--neu-inset);
+  --shadow-neu-inset-sm: var(--neu-inset-sm);
+  --shadow-neu-btn: var(--neu-btn);
+  --shadow-neu-btn-press: var(--neu-btn-press);
+  --shadow-neu-glow: var(--neu-glow);
+  --shadow-neu-groove: var(--neu-groove);
+  --shadow-neu-image: var(--neu-image);
+}
+
+/* ================= base ================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--color-ground-deep);
+    color: #fff;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: -0.01em;
+    overflow-x: clip; /* no sideways scroll on phones */
+  }
+  img, svg, video { display: block; max-width: 100%; }
+  button { cursor: pointer; }
+  a { color: inherit; text-decoration: none; }
+  ::selection { background: rgba(109, 102, 255, 0.5); }
+  :focus-visible { outline: 2px solid var(--color-accent-lit); outline-offset: 3px; border-radius: 4px; }
+
+  /* hide native cursor when the custom cursor is active (desktop) */
+  html.has-cursor, html.has-cursor * { cursor: none !important; }
+  html.has-cursor input, html.has-cursor textarea, html.has-cursor select { cursor: text !important; }
+}
+
+/* ================= components ================= */
+@layer components {
+  .skip-link {
+    @apply absolute -left-[9999px] top-3 z-[100] rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-ground-deep focus:left-3;
+  }
+  .text-gradient {
+    background: linear-gradient(180deg, #fff 20%, #b3b6ff 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* film grain overlay */
+  .grain {
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+}
+
+/* navbar */
+.liquid-glass {
+  background: rgba(10, 8, 40, 0.38);
+  backdrop-filter: blur(16px) saturate(1.5);
+  -webkit-backdrop-filter: blur(16px) saturate(1.5);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 10px 40px rgba(3, 2, 20, 0.4);
+}
+.liquid-glass.is-scrolled { background: rgba(10, 8, 40, 0.78); }
+
+/* ================= services ================= */
+/* each service sets --svc-l / --svc-d inline; --svc is the one for the current theme */
+.svc { --svc: var(--svc-l); }
+:root[data-theme="dark"] .svc { --svc: var(--svc-d); }
+
+.service-card {
+  background: linear-gradient(145deg, rgba(18, 16, 42, 0.9), rgba(12, 10, 30, 0.95));
+  border: 1px solid var(--card-border, rgba(109, 102, 255, 0.15));
+  box-shadow:
+    0 40px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 60px -10px var(--card-glow, rgba(109, 102, 255, 0.12)),
+    inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.6s ease, box-shadow 0.6s ease;
+}
+.service-card:hover {
+  border-color: var(--card-border, rgba(109, 102, 255, 0.3));
+  box-shadow:
+    0 40px 80px -20px rgba(0, 0, 0, 0.6),
+    0 0 80px -10px var(--card-glow, rgba(109, 102, 255, 0.2)),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* light theme: cards become raised neumorphic panels (dark keeps the glass look above) */
+:root:not([data-theme="dark"]) .service-card {
+  background: var(--neu-bg);
+  border-color: transparent;
+  box-shadow: var(--neu-raised-lg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+:root:not([data-theme="dark"]) .service-card::before,
+:root:not([data-theme="dark"]) .service-card::after { display: none; }
+
+/* shimmer sweep on CTA hover */
+.service-cta {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+.service-cta::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+.service-cta:hover::before { left: 100%; }
+.service-cta:hover { transform: translateY(-2px); }
+
+/* ================= theme switch + smooth scroll ================= */
+/* short cross-fade while the toggle is used (class added/removed by ThemeToggle) */
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+
+/* Lenis smooth scroll */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
